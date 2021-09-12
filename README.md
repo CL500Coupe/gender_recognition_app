@@ -5,7 +5,7 @@ Gender recognition web application using cnn model. Dataset and model were colle
 https://www.kaggle.com/maciejgronczynski/biggest-genderface-recognition-dataset
 
 # Model
-
+https://www.kaggle.com/maciejgronczynski/cnn-sequential-gender-recognition-model
 
 # App link
 https://share.streamlit.io/cl500coupe/gender_recognition_app/main/app.py
