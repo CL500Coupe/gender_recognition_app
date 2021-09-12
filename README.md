@@ -12,6 +12,8 @@ https://share.streamlit.io/cl500coupe/gender_recognition_app/main/app.py
 
 # How it works
 
-# Output 1 
+# Input
+![](input.jpg)
 
-# Output 2 
+# Output
+![](output.png)
