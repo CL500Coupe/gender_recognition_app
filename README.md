@@ -10,8 +10,6 @@ https://www.kaggle.com/maciejgronczynski/cnn-sequential-gender-recognition-model
 # App link
 https://share.streamlit.io/cl500coupe/gender_recognition_app/main/app.py
 
-# How it works
-
 # Input
 ![](input.jpg)
 
