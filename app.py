@@ -8,20 +8,6 @@ import time
 import tensorflow as tf
 from img_classification import classification_machine
 import cv2
-from mtcnn.mtcnn import MTCNN
-
-
-#NEW FACE DETECTION SYSTEM MTCNN
-detector = MTCNN()
-
-def mtcnn_detector(image): 
-	face_location = detector.detect_faces(image)
-	for face in zip(face_location): 
-		x_coordinate,y_coordinate,width,height=face[0]['box']
-		image=image[(y_coordinate):(y_coordinate+height),(x_coordinate):(x_coordinate+width)]
-	return image
-
-
 
 #setting up page title,icon
 st.set_page_config(page_title='WhoAmI', page_icon=':woman:', layout='centered', initial_sidebar_state='auto')
