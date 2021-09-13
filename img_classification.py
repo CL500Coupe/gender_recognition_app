@@ -21,7 +21,7 @@ def header_man(url):
 def classification_machine(image1):
 
 	#loading the gender classifier model
-	model = tf.keras.models.load_model('gender_classification_v1_03.h5')
+	model = tf.keras.models.load_model('gender_classification_v1_alt.h5')
 	shape = ((180,180,3))#input shape
 	tf.keras.Sequential([hub.KerasLayer(model,input_shape=shape)])
 	test_image = image1.resize((180,180))

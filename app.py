@@ -8,29 +8,42 @@ import time
 import tensorflow as tf
 from img_classification import classification_machine
 import cv2
+from mtcnn.mtcnn import MTCNN
 
+
+#NEW FACE DETECTION SYSTEM MTCNN
+detector = MTCNN()
+
+def mtcnn_detector(image): 
+	face_location = detector.detect_faces(image)
+	for face in zip(face_location): 
+		x_coordinate,y_coordinate,width,height=face[0]['box']
+		image=image[(y_coordinate):(y_coordinate+height),(x_coordinate):(x_coordinate+width)]
+	return image
+
+
+
+#setting up page title,icon
 st.set_page_config(page_title='WhoAmI', page_icon=':woman:', layout='centered', initial_sidebar_state='auto')
 
-
+#importing my haar classifier
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-# Designing the interface
+#title
 st.markdown("<h1 style='text-align: center;font-size:50px; color: black;'>Gender Classification App </h1>", unsafe_allow_html=True)
 
-
-# For newline
-st.write('\n')
-
-image_front = Image.open('test_photos/front.jpg')
+#front image upload and display
+image_front = Image.open('front.jpg')
 show = st.image(image_front, use_column_width=True)
 
+#short description 
 st.sidebar.markdown("<h1 style='text-align: center;font-size:40px; color: black;'>Upload Image </h1>", unsafe_allow_html=True)
 st.sidebar.write('Please upload face image (png, jpg, jpeg) you want to predict!')
 
-#Disabling warning
+#disabling warning
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
-
+#detect_faces function 
 def detect_faces(image):
 	new_img = np.array(image.convert('RGB'))
 	img = cv2.cvtColor(new_img,1)
@@ -38,9 +51,7 @@ def detect_faces(image):
 	# Detect faces
 	#faces = face_cascade.detectMultiScale(gray,1.05, 6,(30,30))
 	faces  = face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=5, minSize=(100,100))
-
 	number_of_faces = len(faces)
-
 	# Draw rectangle around the faces
 	for (x, y, w, h) in faces:
 				 cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 8)
@@ -49,23 +60,18 @@ def detect_faces(image):
 		cropped_img = img[y:y+h, x:x+w]
 	else:
 		cropped_img = None 
-
-
 	return img,faces,number_of_faces,cropped_img 
 
-
-#Choose your own image
+#uploader
 uploaded_file = st.sidebar.file_uploader(" ",type=['png', 'jpg', 'jpeg'] )
 if uploaded_file is not None:
 	#that's our uploaded image
 	image = Image.open(uploaded_file)
 
-
 	result_img,result_faces,number_of_faces,cropped_img = detect_faces(image)
 	st.image(result_img)
 	st.write("Classifying...")
 	st.write('Number of faces found',number_of_faces)
-
 
 	if cropped_img is not None:
 		st.write("Here's cropped image which should display face...")
@@ -73,16 +79,11 @@ if uploaded_file is not None:
 	else:
 		st.write("Unfortunately couldn't find face to crop...")
 
-
 	show.empty()  #that function close image_front photo.
 	#st.image(image, caption='Uploaded photo.', use_column_width=True)
 	st.write("")
 
-
-
 	st.sidebar.write("<h1 style='text-align: center; color: green;'>My prediction is...</h1>", unsafe_allow_html=True)
-
-
 
 	label = classification_machine(image) #OKAY SO I WANT TO PASS MY CROPPED IMAGE HERE
 
