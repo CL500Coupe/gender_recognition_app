@@ -19,7 +19,7 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fronta
 st.markdown("<h1 style='text-align: center;font-size:50px; color: black;'>Gender Classification App </h1>", unsafe_allow_html=True)
 
 #front image upload and display
-image_front = Image.open('front.jpg')
+image_front = Image.open('test_photos/front.jpg')
 show = st.image(image_front, use_column_width=True)
 
 #short description 
